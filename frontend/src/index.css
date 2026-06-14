@@ -183,6 +183,29 @@ body {
   color: #ef4444;
 }
 
+.vs-edge-delete {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background: #fff;
+  color: #ef4444;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  pointer-events: all;
+  box-shadow: 0 1px 4px rgba(17, 21, 31, 0.18);
+}
+
+.vs-edge-delete:hover {
+  background: #fee2e2;
+}
+
 .vs-node__body {
   display: flex;
   flex-direction: column;

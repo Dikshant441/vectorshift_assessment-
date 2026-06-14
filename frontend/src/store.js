@@ -34,6 +34,10 @@ export const useStore = create((set, get) => ({
     });
   },
 
+  removeEdge: (edgeId) => {
+    set({ edges: get().edges.filter((edge) => edge.id !== edgeId) });
+  },
+
   onNodesChange: (changes) => {
     set({ nodes: applyNodeChanges(changes, get().nodes) });
   },
@@ -47,7 +51,7 @@ export const useStore = create((set, get) => ({
       edges: addEdge(
         {
           ...connection,
-          type: 'smoothstep',
+          type: 'deletable',
           animated: true,
           markerEnd: { type: MarkerType.ArrowClosed, height: 18, width: 18 },
         },

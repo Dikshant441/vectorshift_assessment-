@@ -12,6 +12,7 @@ import { MathNode } from './nodes/mathNode';
 import { ApiNode } from './nodes/apiNode';
 import { NoteNode } from './nodes/noteNode';
 import { ConditionNode } from './nodes/conditionNode';
+import { DeletableEdge } from './edges/DeletableEdge';
 
 import 'reactflow/dist/style.css';
 
@@ -28,6 +29,10 @@ const nodeTypes = {
   api: ApiNode,
   note: NoteNode,
   condition: ConditionNode,
+};
+
+const edgeTypes = {
+  deletable: DeletableEdge,
 };
 
 const selector = (state) => ({
@@ -98,6 +103,7 @@ export const PipelineUI = () => {
         onDragOver={onDragOver}
         onInit={setReactFlowInstance}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         proOptions={proOptions}
         snapGrid={[gridSize, gridSize]}
         connectionLineType="smoothstep"
