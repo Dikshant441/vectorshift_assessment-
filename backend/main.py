@@ -7,7 +7,6 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-# Allow the React dev server (and anything else, for the assessment) to call us.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -17,8 +16,6 @@ app.add_middleware(
 )
 
 
-# We only need a few fields from each node/edge. Pydantic ignores the rest
-# (position, data, sourceHandle, etc.) so the frontend can send full objects.
 class Node(BaseModel):
     id: str
 
@@ -39,16 +36,10 @@ def read_root():
 
 
 def check_is_dag(nodes: List[Node], edges: List[Edge]) -> bool:
-    """A graph is a DAG if a topological sort can include every node.
-
-    Uses Kahn's algorithm: repeatedly remove nodes with no incoming edges.
-    If we manage to remove all of them, there is no cycle -> it is a DAG.
-    """
     indegree = {node.id: 0 for node in nodes}
     adjacency = defaultdict(list)
 
     for edge in edges:
-        # Ignore edges that point to/from unknown nodes.
         if edge.source in indegree and edge.target in indegree:
             adjacency[edge.source].append(edge.target)
             indegree[edge.target] += 1
@@ -64,7 +55,6 @@ def check_is_dag(nodes: List[Node], edges: List[Edge]) -> bool:
             if indegree[neighbor] == 0:
                 queue.append(neighbor)
 
-    # If every node was visited, no cycle remained.
     return visited_count == len(nodes)
 
 

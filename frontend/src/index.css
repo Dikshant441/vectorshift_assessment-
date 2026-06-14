@@ -1,0 +1,342 @@
+/* ============================================================
+   Pipeline Builder — styling (Assessment Part 2)
+   One quiet, cool-grey product surface. The single deliberate
+   move is per-category colour: each node type owns an accent
+   that runs through its toolbar chip, header, and handles, so
+   a busy graph stays scannable at a glance.
+   ============================================================ */
+
+:root {
+  --bg: #f4f6fa;
+  --surface: #ffffff;
+  --border: #e3e8f0;
+  --border-strong: #d2d9e6;
+  --ink: #1e2330;
+  --ink-muted: #6b7384;
+  --topbar: #11151f;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --radius: 12px;
+  --shadow-node: 0 1px 2px rgba(17, 21, 31, 0.06),
+    0 8px 24px rgba(17, 21, 31, 0.08);
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--bg);
+}
+
+/* ---------- Layout ---------- */
+.vs-app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.vs-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px;
+  height: 52px;
+  background: var(--topbar);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.vs-topbar__mark {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+.vs-topbar__title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Toolbar ---------- */
+.vs-toolbar {
+  padding: 14px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.vs-toolbar__label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 10px;
+}
+
+.vs-toolbar__nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vs-chip-drag {
+  --accent: #64748b;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.vs-chip-drag::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.vs-chip-drag:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(17, 21, 31, 0.08);
+}
+
+/* ---------- Canvas ---------- */
+.vs-canvas {
+  flex: 1;
+  min-height: 0;
+}
+
+.react-flow__attribution {
+  display: none;
+}
+
+.react-flow__controls,
+.react-flow__minimap {
+  box-shadow: var(--shadow-node);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ---------- Nodes ---------- */
+.vs-node {
+  --accent: #64748b;
+  width: 220px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-node);
+  font-size: 13px;
+  overflow: visible;
+}
+
+.vs-node__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.vs-node__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.vs-node__title {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.vs-node__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+}
+
+.vs-node__hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ink-muted);
+}
+
+/* ---------- Fields ---------- */
+.vs-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vs-field__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.vs-field__control {
+  width: 100%;
+  padding: 7px 9px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--ink);
+  background: #fbfcfe;
+  border: 1px solid var(--border-strong);
+  border-radius: 7px;
+  outline: none;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.vs-field__control:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.vs-textarea {
+  resize: none;
+  min-height: 38px;
+  line-height: 1.45;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  overflow: hidden;
+}
+
+/* ---------- Variable chips (Text node) ---------- */
+.vs-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.vs-chip {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 5px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, white);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, white);
+}
+
+/* ---------- Handles ---------- */
+.vs-handle {
+  width: 10px;
+  height: 10px;
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+}
+
+.vs-handle:hover {
+  background: var(--accent);
+}
+
+/* ---------- Per-category accents ---------- */
+.vs-node--input,
+.vs-chip-drag--customInput {
+  --accent: #10b981;
+}
+.vs-node--output,
+.vs-chip-drag--customOutput {
+  --accent: #8b5cf6;
+}
+.vs-node--llm,
+.vs-chip-drag--llm {
+  --accent: #3b82f6;
+}
+.vs-node--text,
+.vs-chip-drag--text {
+  --accent: #f59e0b;
+}
+.vs-node--filter,
+.vs-chip-drag--filter {
+  --accent: #06b6d4;
+}
+.vs-node--math,
+.vs-chip-drag--math {
+  --accent: #f43f5e;
+}
+.vs-node--api,
+.vs-chip-drag--api {
+  --accent: #6366f1;
+}
+.vs-node--condition,
+.vs-chip-drag--condition {
+  --accent: #f97316;
+}
+.vs-node--note,
+.vs-chip-drag--note {
+  --accent: #94a3b8;
+}
+
+/* Note node reads like a sticky pad. */
+.vs-node--note {
+  background: #fffdf3;
+}
+
+/* ---------- Submit ---------- */
+.vs-submit {
+  display: flex;
+  justify-content: center;
+  padding: 14px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.vs-submit__btn {
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: var(--primary);
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.12s ease, transform 0.12s ease;
+}
+
+.vs-submit__btn:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.vs-submit__btn:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}
+
+/* ---------- A11y ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
