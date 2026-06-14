@@ -18,7 +18,6 @@ import 'reactflow/dist/style.css';
 const gridSize = 16;
 const proOptions = { hideAttribution: true };
 
-// The string keys here must match the `type` strings used in the toolbar.
 const nodeTypes = {
   customInput: InputNode,
   llm: LLMNode,

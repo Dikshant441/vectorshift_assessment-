@@ -2,24 +2,6 @@ import { useEffect, useState } from 'react';
 import { Handle, Position, useUpdateNodeInternals } from 'reactflow';
 import { useStore } from '../store';
 
-/**
- * BaseNode
- * ---------
- * One reusable shell that every node is built from. A new node only has to
- * describe *what* it contains (a title, some fields, some handles) — never
- * *how* it is laid out, styled, or wired into the store. That shared chrome
- * lives here once.
- *
- * Props:
- *  - title    : text shown in the coloured header
- *  - handles  : [{ id, type: 'source' | 'target', position }]
- *  - fields   : [{ name, label, type: 'text' | 'select', options?, default? }]
- *  - children : custom content (used by nodes with special logic, e.g. Text)
- *  - className: extra class for per-node accent colours
- */
-
-// Space handles evenly down the side they sit on, so a node with two inputs
-// doesn't stack them on top of each other.
 const handleStyle = (allHandles, handle) => {
   const sameSide = allHandles.filter((h) => h.position === handle.position);
   const indexOnSide = sameSide.indexOf(handle);
@@ -40,9 +22,9 @@ export const BaseNode = ({
   style = {},
 }) => {
   const updateNodeField = useStore((state) => state.updateNodeField);
+  const removeNode = useStore((state) => state.removeNode);
   const updateNodeInternals = useUpdateNodeInternals();
 
-  // Local mirror of field values, seeded from saved data or each field default.
   const [values, setValues] = useState(() => {
     const seed = {};
     fields.forEach((f) => {
@@ -56,8 +38,6 @@ export const BaseNode = ({
     updateNodeField(id, name, value);
   };
 
-  // When the set of handles changes (e.g. Text node variables), tell React Flow
-  // to re-measure so connected edges snap to the right spot.
   const handleKey = handles.map((h) => h.id).join('|');
   useEffect(() => {
     updateNodeInternals(id);
@@ -68,6 +48,15 @@ export const BaseNode = ({
       <div className="vs-node__header">
         <span className="vs-node__dot" />
         <span className="vs-node__title">{title}</span>
+        <button
+          type="button"
+          className="vs-node__remove"
+          title="Delete node"
+          aria-label="Delete node"
+          onClick={() => removeNode(id)}
+        >
+          ×
+        </button>
       </div>
 
       <div className="vs-node__body">

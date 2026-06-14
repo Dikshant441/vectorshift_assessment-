@@ -1,11 +1,3 @@
-/* ============================================================
-   Pipeline Builder — styling (Assessment Part 2)
-   One quiet, cool-grey product surface. The single deliberate
-   move is per-category colour: each node type owns an accent
-   that runs through its toolbar chip, header, and handles, so
-   a busy graph stays scannable at a glance.
-   ============================================================ */
-
 :root {
   --bg: #f4f6fa;
   --surface: #ffffff;
@@ -35,7 +27,6 @@ body {
   background: var(--bg);
 }
 
-/* ---------- Layout ---------- */
 .vs-app {
   display: flex;
   flex-direction: column;
@@ -66,7 +57,6 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* ---------- Toolbar ---------- */
 .vs-toolbar {
   padding: 14px 20px;
   background: var(--surface);
@@ -122,7 +112,6 @@ body {
   box-shadow: 0 4px 12px rgba(17, 21, 31, 0.08);
 }
 
-/* ---------- Canvas ---------- */
 .vs-canvas {
   flex: 1;
   min-height: 0;
@@ -139,7 +128,6 @@ body {
   overflow: hidden;
 }
 
-/* ---------- Nodes ---------- */
 .vs-node {
   --accent: #64748b;
   width: 220px;
@@ -172,6 +160,29 @@ body {
   font-size: 13px;
 }
 
+.vs-node__remove {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink-muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.vs-node__remove:hover {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
 .vs-node__body {
   display: flex;
   flex-direction: column;
@@ -186,7 +197,6 @@ body {
   color: var(--ink-muted);
 }
 
-/* ---------- Fields ---------- */
 .vs-field {
   display: flex;
   flex-direction: column;
@@ -220,15 +230,28 @@ body {
 }
 
 .vs-textarea {
-  resize: none;
+  resize: vertical;
   min-height: 38px;
   line-height: 1.45;
   font-family: var(--mono);
   font-size: 12.5px;
-  overflow: hidden;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
-/* ---------- Variable chips (Text node) ---------- */
+.vs-textarea--auto {
+  resize: both;
+  min-width: 180px;
+  max-width: 700px;
+  overflow: auto;
+}
+
+.vs-node--text {
+  width: fit-content;
+  max-width: 740px;
+}
+
 .vs-chips {
   display: flex;
   flex-wrap: wrap;
@@ -245,20 +268,39 @@ body {
   border: 1px solid color-mix(in srgb, var(--accent) 30%, white);
 }
 
-/* ---------- Handles ---------- */
 .vs-handle {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   background: var(--surface);
   border: 2px solid var(--accent);
+  border-radius: 50%;
+  transition: transform 0.1s ease, background 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.vs-handle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  transform: translate(-50%, -50%);
   border-radius: 50%;
 }
 
 .vs-handle:hover {
   background: var(--accent);
+  transform: scale(1.35);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
-/* ---------- Per-category accents ---------- */
+.react-flow__handle-connecting,
+.react-flow__handle-valid {
+  background: var(--accent);
+  transform: scale(1.35);
+}
+
 .vs-node--input,
 .vs-chip-drag--customInput {
   --accent: #10b981;
@@ -296,12 +338,10 @@ body {
   --accent: #94a3b8;
 }
 
-/* Note node reads like a sticky pad. */
 .vs-node--note {
   background: #fffdf3;
 }
 
-/* ---------- Submit ---------- */
 .vs-submit {
   display: flex;
   justify-content: center;
@@ -334,7 +374,6 @@ body {
   cursor: progress;
 }
 
-/* ---------- A11y ---------- */
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;

@@ -1,7 +1,6 @@
 import { Position } from 'reactflow';
 import { BaseNode } from './BaseNode';
 
-// Two inputs, one output — shows multiple handles on the same side.
 export const MathNode = ({ id, data }) => (
   <BaseNode
     id={id}
@@ -18,8 +17,7 @@ export const MathNode = ({ id, data }) => (
       },
     ]}
     handles={[
-      { id: `${id}-a`, type: 'target', position: Position.Left },
-      { id: `${id}-b`, type: 'target', position: Position.Left },
+      { id: `${id}-input`, type: 'target', position: Position.Left },
       { id: `${id}-result`, type: 'source', position: Position.Right },
     ]}
   />

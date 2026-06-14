@@ -1,7 +1,5 @@
 import { DraggableNode } from './draggableNode';
 
-// Order here is the order shown in the toolbar. The `type` must match the keys
-// in nodeTypes (ui.js).
 const NODES = [
   { type: 'customInput', label: 'Input' },
   { type: 'llm', label: 'LLM' },

@@ -8,11 +8,10 @@ export const LLMNode = ({ id, data }) => (
     title="LLM"
     className="vs-node--llm"
     handles={[
-      { id: `${id}-system`, type: 'target', position: Position.Left },
       { id: `${id}-prompt`, type: 'target', position: Position.Left },
       { id: `${id}-response`, type: 'source', position: Position.Right },
     ]}
   >
-    <p className="vs-node__hint">Large language model. Wire a system prompt and a prompt in.</p>
+    <p className="vs-node__hint">Large language model. Wire a prompt in, read the response out.</p>
   </BaseNode>
 );
